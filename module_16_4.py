@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Body, HTTPException
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -19,7 +19,11 @@ async def get_() -> list[User]:
 
 @app.post('/user/{username}/{age}')
 async def post_(message: User) -> str:
-    message.id = len(users)+1
+    if len(users) == 0:
+        message.id = 1
+    else:
+        last_user = users[-1]
+        message.id = last_user.id+1
     users.append(message)
     return f'User {message.id} is registered'
 
