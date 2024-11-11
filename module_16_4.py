@@ -34,7 +34,8 @@ async def put_(user_id: int, message: User) -> str:
         edit_user = users[user_id-1]
         edit_user.username = message.username
         edit_user.age = message.age
-        return f'The user {user_id} has been updated'
+        print(f'The user {user_id} has been updated')
+        return edit_user
     except IndexError:
         raise HTTPException(status_code=404, detail='User was not found')
 
@@ -44,6 +45,7 @@ async def delete_(user_id: int) -> str:
     try:
         delete_user = users[user_id-1]
         users.remove(delete_user)
-        return f'User {user_id} has been deleted'
+        print(f'User {user_id} has been deleted')
+        return delete_user
     except IndexError:
         raise HTTPException(status_code=404, detail='User was not found')
